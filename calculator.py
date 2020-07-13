@@ -37,32 +37,49 @@ else:
 first_duration = input("How long do you want to do this activity? Put your duration in minutes. ")
 choices[0]["duration"] = first_duration
 
-## ADD MORE ACTIVITIES
+## ADD MORE ACTIVITIES (ask the user until they're done)
 
 def addActivity():
-    # Add a dictionary to the list
-    choices.append(dict(activity = "", duration = 0))
+    
+    # Ask the user if they want to add more activities
+    continue_schedule = input("Do you want to add more activities? Type Y or N: ").upper()
+    
+    while continue_schedule == "Y":
 
-    # Define the activity
-    user_activity = input("Type what activity you want to do: ")
-    choices[len(choices)-1]["activity"] = user_activity
+        # Add a dictionary to the list
+        choices.append(dict(activity = "", duration = 0))
 
-    # Define the duration
-    user_duration = input("How long do you want to do this activity? Put your duration in minutes. ")
-    choices[len(choices)-1]["duration"] = user_duration
+        # Define the activity
+        user_activity = input("Type what activity you want to do: ")
+        choices[len(choices)-1]["activity"] = user_activity
 
-continue_schedule = input("Do you want to add more activities? Type Y or N: ").upper()
-if continue_schedule == "Y":
-    addActivity()
-else:
-    print("Thank you for scheduling your day with us! ")
+        # Define the duration
+        user_duration = input("How long do you want to do this activity? Put your duration in minutes. ")
+        choices[len(choices)-1]["duration"] = user_duration
+
+        continue_schedule = input("Do you want to add more activities? Type Y or N: ").upper()
+    
+    else: 
+        
+        print("Thank you for scheduling your day with us! ")
+
+addActivity()
 
 ## USER INDICATES THAT THEY'RE DONE
 
+user_done = input("Are you done with your schedule? Type Y to confirm and see your finished schedule, and N to add more activities: ").upper()
+
 ## OUTPUT THE SCHEDULE
-print("Start your day at " + times[0]["start time"])
 
-for i in range(0, len(choices)):
-    print(choices[i]["activity"].capitalize() + " for " + str(choices[i]["duration"]) + " minutes")
+def showSchedule():
+    print("Start your day at " + times[0]["start time"])
 
-print("End your day at " + times[len(times)-1]["end time"])
+    for i in range(0, len(choices)):
+        print(choices[i]["activity"].capitalize() + " for " + str(choices[i]["duration"]) + " minutes")
+
+    print("End your day at " + times[len(times)-1]["end time"])
+    
+if user_done == "Y":
+    showSchedule()
+else:
+    addActivity()
